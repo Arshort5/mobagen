@@ -31,7 +31,7 @@ void Boid::Update(float deltaTime) {
 
   for (auto& rule : rules) {
     auto weightedForce = rule->computeWeightedForce(neighborhood, this);
-    // std::cout << typeid(*rule).name() << " Force : " << Vector2f::getMagnitude(weightedForce) << std::endl;
+   // std::cout << typeid(*rule).name() << " Force : " << Vector2f::getMagnitude(weightedForce) << std::endl;
     applyForce(weightedForce);
   }
 }
