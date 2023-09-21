@@ -16,7 +16,7 @@ void JohnConway::Step(World& world)
             {
             world.SetNext({c, l}, false);
             } 
-            else if (CountNeighbors(world, {c, l}) > 3 && world.Get({c, l}) == false) 
+            else if (CountNeighbors(world, {c, l}) == 3 && world.Get({c, l}) == false) 
             {
             world.SetNext({c, l}, true);
             }
