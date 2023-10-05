@@ -20,7 +20,7 @@ bool RecursiveBacktrackerExample::Step(World* w)
     {
 
         w->SetNodeColor(stack.back(), Color::Red);
-
+        w->SetNorth(stack.back(), false);
         if (visited[stack.back().x][stack.back().y]) 
         {
          w->SetNodeColor(stack.back(), Color::Black);
@@ -30,28 +30,29 @@ bool RecursiveBacktrackerExample::Step(World* w)
    
         std::vector<Point2D> visitables = getVisitables(w, stack.back());
 
-         if (visitables.empty())
-         {
-             stack.pop_back();
-         } 
+    if (visitables.empty())
+    {
+    w->SetNodeColor(stack.back(), Color::Black);
+    stack.pop_back();
+    } 
 
     else if (visitables.size() == 1)
     {
       stack.push_back(visitables[0]);
 
-      if (visited[visitables[0].x][visitables[0].x]) {
+    //  if (visited[visitables[0].x][visitables[0].x]) {
         w->SetNodeColor(visitables[0], Color::Green);
-      }
+    //  }
       
     } 
     else {
       int i = rand() % visitables.size();
       stack.push_back(visitables[i]);
 
-      if (visited[visitables[i].x][visitables[i].x]) 
-      {
+    //  if (visited[visitables[i].x][visitables[i].x]) 
+      //{
         w->SetNodeColor(visitables[i], Color::Green);
-      }
+     // }
       
     }
 
@@ -85,27 +86,27 @@ Point2D RecursiveBacktrackerExample::randomStartPoint(World* world) {
   // todo: change this if you want
   for (int y = -sideOver2; y <= sideOver2; y++)
     for (int x = -sideOver2; x <= sideOver2; x++)
-      if (!visited[y][x]) return {x, y};
+      if (!visited[x][y]) return {x, y};
   return {INT_MAX, INT_MAX};
 }
 
 std::vector<Point2D> RecursiveBacktrackerExample::getVisitables(World* w, const Point2D& p) {
   auto sideOver2 = w->GetSize() / 2;
   std::vector<Point2D> visitables;
-  if (!visited[p.LEFT.x][p.y]) 
+  if (!visited[p.Left().x][p.y] && p.Left().x > -sideOver2) 
   {
-    visitables.push_back(p.LEFT);
+    visitables.push_back(p.Left());
   }
-  if (!visited[p.RIGHT.x][p.y]) {
-    visitables.push_back(p.RIGHT);
-  }
-
-  if (!visited[p.x][p.UP.y]) {
-    visitables.push_back(p.UP);
+  if (!visited[p.Right().x][p.y] && p.Right().x < sideOver2+1) {
+    visitables.push_back(p.Right());
   }
 
-  if (!visited[p.x][p.DOWN.y]) {
-    visitables.push_back(p.DOWN);
+  if (!visited[p.x][p.Up().y] && p.Up().y > -sideOver2) {
+    visitables.push_back(p.Up());
+  }
+
+  if (!visited[p.x][p.Down().y] && p.Down().y < sideOver2+1) {
+    visitables.push_back(p.Down());
   }
 
 
