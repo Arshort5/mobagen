@@ -20,7 +20,6 @@ bool RecursiveBacktrackerExample::Step(World* w)
     {
 
         w->SetNodeColor(stack.back(), Color::Red);
-        w->SetNorth(stack.back(), false);
         if (visited[stack.back().x][stack.back().y]) 
         {
          w->SetNodeColor(stack.back(), Color::Black);
@@ -38,21 +37,56 @@ bool RecursiveBacktrackerExample::Step(World* w)
 
     else if (visitables.size() == 1)
     {
-      stack.push_back(visitables[0]);
+       
 
-    //  if (visited[visitables[0].x][visitables[0].x]) {
+        if (visitables[0].x > stack.back().x) 
+        {
+          w->SetEast(stack.back(), false);
+          w->SetWest(visitables[0], false);
+
+        }
+        else if (visitables[0].x < stack.back().x)
+        {
+        w->SetEast(visitables[0], false);
+        w->SetWest( stack.back(), false);
+        }
+        else if (visitables[0].y > stack.back().y) 
+        {
+        w->SetSouth(stack.back(), false);
+        w->SetNorth(visitables[0], false);
+        }
+        else if (visitables[0].y < stack.back().y) 
+        {
+        w->SetSouth(visitables[0], false);
+        w->SetNorth(stack.back(), false);
+        }
+
+        stack.push_back(visitables[0]);
         w->SetNodeColor(visitables[0], Color::Green);
-    //  }
       
     } 
     else {
       int i = rand() % visitables.size();
-      stack.push_back(visitables[i]);
 
-    //  if (visited[visitables[i].x][visitables[i].x]) 
-      //{
+      if (visitables[i].x > stack.back().x) {
+        w->SetEast(stack.back(), false);
+        w->SetWest(visitables[i], false);
+      } else if (visitables[i].x < stack.back().x) {
+        w->SetEast(visitables[i], false);
+        w->SetWest(stack.back(), false);
+      } else if (visitables[i].y > stack.back().y) {
+        w->SetSouth(stack.back(), false);
+        w->SetNorth(visitables[i], false);
+      } else if (visitables[i].y < stack.back().y) {
+        w->SetSouth(visitables[i], false);
+        w->SetNorth(stack.back(), false);
+      }
+
+
+
+
+      stack.push_back(visitables[i]);
         w->SetNodeColor(visitables[i], Color::Green);
-     // }
       
     }
 
@@ -93,7 +127,7 @@ Point2D RecursiveBacktrackerExample::randomStartPoint(World* world) {
 std::vector<Point2D> RecursiveBacktrackerExample::getVisitables(World* w, const Point2D& p) {
   auto sideOver2 = w->GetSize() / 2;
   std::vector<Point2D> visitables;
-  if (!visited[p.Left().x][p.y] && p.Left().x > -sideOver2) 
+  if (!visited[p.Left().x][p.y] && p.Left().x > -sideOver2+-1) 
   {
     visitables.push_back(p.Left());
   }
@@ -101,7 +135,7 @@ std::vector<Point2D> RecursiveBacktrackerExample::getVisitables(World* w, const 
     visitables.push_back(p.Right());
   }
 
-  if (!visited[p.x][p.Up().y] && p.Up().y > -sideOver2) {
+  if (!visited[p.x][p.Up().y] && p.Up().y > -sideOver2-1) {
     visitables.push_back(p.Up());
   }
 
