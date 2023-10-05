@@ -4,7 +4,6 @@
 
 bool PrimExample::Step(World* w) {
   int sideOver2 = w->GetSize() / 2;
-
   return true;
 }
 void PrimExample::Clear(World* world) {
@@ -16,8 +15,6 @@ std::vector<Point2D> PrimExample::getVisitables(World* w, const Point2D& p) {
   auto sideOver2 = w->GetSize() / 2;
   std::vector<Point2D> visitables;
   auto clearColor = Color::DarkGray;
-
-
 
   return visitables;
 }
