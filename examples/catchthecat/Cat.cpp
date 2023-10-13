@@ -110,24 +110,22 @@ Point2D Cat::Move(World* world) {
     //no valid spots
     if (finished.empty()) 
     {
-        if (!world->getContent(World::NE(pos)))
-        {
-           return World::NE(pos);
-        }
-        else if (!world->getContent(World::NW(pos)) ) {
-           return World::NW(pos);
-        }
-          else if (!world->getContent(World::E(pos))) {
-           return World::E(pos);
-        }
-          else if (!world->getContent(World::W(pos))) {
-           return World::W(pos);
-        }
-          else if (!world->getContent(World::SW(pos)) ) {
-           return World::SW(pos);
-        }
-          else if (!world->getContent(World::SE(pos))) {
-           return World::SW(pos);
+       
+        while (true) {
+           int rand = Random::Range(0, 5);
+           if (!world->getContent(World::NE(pos)) && rand == 0) {
+             return World::NE(pos);
+           } else if (!world->getContent(World::NW(pos)) && rand == 1) {
+             return World::NW(pos);
+           } else if (!world->getContent(World::E(pos)) && rand == 2) {
+             return World::E(pos);
+           } else if (!world->getContent(World::W(pos)) && rand == 3) {
+             return World::W(pos);
+           } else if (!world->getContent(World::SW(pos)) && rand == 4) {
+             return World::SW(pos);
+           } else if (!world->getContent(World::SE(pos)) && rand == 5) {
+             return World::SE(pos);
+           }
         }
     } 
     else {
